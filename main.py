@@ -11,7 +11,7 @@ def greet():
 
 products = [
     Product(id =1,name ="Phone",description = "Budget Phone",price = 99.99,quantity = 10),
-   Product(id =2,name ="Laptop",description = "Gaming Laptop",price = 199.99,quantity = 5),
+    Product(id =2,name ="Laptop",description = "Gaming Laptop",price = 199.99,quantity = 5),
     Product(id =3,name ="Keyboard",description = "Mechanical keyboard",price = 49.99,quantity = 2),
 ]
 
@@ -33,3 +33,20 @@ def get_product_by_id(id:int):
 def add_product(product : Product):
     products.append(product)
     return product
+
+@app.put("/product")
+def update_product(id:int, product:Product):
+    for i in range(len(products)):
+        if(products[i].id == id):
+            products[i] = product
+            return "Product Added Successfully" 
+    return "No Product found"    
+
+@app.delete("/product")
+def delete_product(id:int):
+    for i in range(len(products)):
+        if products[i].id ==id:
+            del products[i]
+            return "Product deleted"
+        
+    return "Product not found"
