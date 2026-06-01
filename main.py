@@ -1,7 +1,11 @@
 from fastapi import FastAPI
 from models import Product
+from database import session,engine
+import database_models
 
 app = FastAPI() 
+
+database_models.Base.metadata.create_all(bind = engine)
 
 
 @app.get("/")
@@ -17,6 +21,11 @@ products = [
 
 @app.get("/products")
 def get_all_products():
+    #db connection
+    db = session()
+    #query
+    db.query()
+
     return products
 
 
@@ -37,7 +46,7 @@ def add_product(product : Product):
 @app.put("/product")
 def update_product(id:int, product:Product):
     for i in range(len(products)):
-        if(products[i].id == id):
+        if(products[i].id == id):   
             products[i] = product
             return "Product Added Successfully" 
     return "No Product found"    
